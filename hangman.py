@@ -28,18 +28,42 @@ def isWordSolved(word):
 			
 
 
-def userGuess(guessedLetters):
+def userGuess(word, guessedLetters):
 	guess = raw_input("Guess a letter: ")
 	#print "Your guess is: ", guess
 	guessedLetters.append(guess)
+	return isGuessCorrect(word, guess)
 
 
-def printHangman():
+def isGuessCorrect(word, guessedLetter):
+	return guessedLetter in word
+
+	
+def printHangman(wrongGuessCount):
 	line1 = '  __________'
 	line2 = '  //      |'
-	line3 = ' //       O'
-	line4 = '/||      /|\\ '
-	line5 = ' ||      / \\'
+	
+	if wrongGuessCount > 0:
+		line3 = ' //       O'
+	else:
+		line3 = ' //       '
+	
+	if wrongGuessCount == 2:
+		line4 = '/||       |  '
+	elif wrongGuessCount == 3:
+		line4 = '/||      /|  '
+	elif wrongGuessCount > 3:
+		line4 = '/||      /|\\ '
+	else:
+		line4 = '/||     '
+	
+	if wrongGuessCount == 4:
+		line5 = ' ||      / '
+	elif wrongGuessCount > 4:	
+		line5 = ' ||      / \\'
+	else:
+		line5 = ' ||'
+	
 	line6 = ' ||'
 	line7 = '----'
 	line8 = ''
@@ -57,6 +81,7 @@ def printHangman():
 guessedLetters = []
 uncoveredWord = ''
 solved = False
+wrongGuessCount = 0
 
 
 # FLOW
@@ -65,9 +90,12 @@ word = selectWord('ALICE')
 print maskWord(word, guessedLetters)
 
 while (isWordSolved(maskWord(word, guessedLetters)) == False):
-	userGuess(guessedLetters)
+
+	if (userGuess(word, guessedLetters) == False):
+		wrongGuessCount = wrongGuessCount + 1
+
 	print ''
 	print maskWord(word, guessedLetters)
 	print ''
-	printHangman()
+	printHangman(wrongGuessCount)
 
