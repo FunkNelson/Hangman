@@ -91,6 +91,7 @@ print maskWord(word, guessedLetters)
 
 while (isWordSolved(maskWord(word, guessedLetters)) == False):
 
+	#prompt user for guess and check if it is correct
 	if (userGuess(word, guessedLetters) == False):
 		wrongGuessCount = wrongGuessCount + 1
 
