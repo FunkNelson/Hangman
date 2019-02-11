@@ -16,6 +16,7 @@ def maskWord(word, guessedLetters):
 			currentWordState = currentWordState + i + ' '
 		else:
 			currentWordState = currentWordState + '_ '
+	#print 'Guessed Letters: ' + str(guessedLetters)
 	return currentWordState
 
 def isWordSolved(word):
@@ -93,10 +94,17 @@ while (isWordSolved(maskWord(word, guessedLetters)) == False):
 
 	#prompt user for guess and check if it is correct
 	if (userGuess(word, guessedLetters) == False):
-		wrongGuessCount = wrongGuessCount + 1
+		wrongGuessCount = wrongGuessCount + 1 
 
 	print ''
 	print maskWord(word, guessedLetters)
+	print '' 
+	print 'Guessed Letters: ' + str(guessedLetters)
 	print ''
 	printHangman(wrongGuessCount)
+
+	#lose if there are six incorrect guesses
+	if wrongGuessCount == 5:
+		print 'Sorry, you didn\'t guess the phrase and are dead now'
+		quit() 
 
